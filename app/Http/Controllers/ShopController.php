@@ -25,7 +25,7 @@ class ShopController extends Controller
     {
         //
         $product= Product::where('slug',$slug)->firstOrFail();
-        $suggestions= Product::where('slug','!=',$slug)->inRandomOrder()->take(4)->get();
+        $suggestions= Product::where('slug','!=',$slug)->Suggestions()->get();
         return view('product')->with([
             'product'=>$product,
             'suggestions'=>$suggestions

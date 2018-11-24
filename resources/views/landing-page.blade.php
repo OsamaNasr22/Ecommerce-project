@@ -21,10 +21,16 @@
             <div class="top-nav container">
                 <div class="logo">Laravel Ecommerce</div>
                 <ul>
-                    <li><a href="#">Shop</a></li>
+                    <li><a href="{{route('shop.index')}}">Shop</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Blog</a></li>
-                    <li><a href="#">Cart <span class="cart-count"><span>3</span></span></a></li>
+                    <li><a href="{{route('cart.index')}}">Cart
+                            @if(Cart::instance('default')->count() > 0)
+                                <span class="cart-count"><span>{{Cart::instance('default')->count()}}</span></span>
+
+                            @endif
+                        </a>
+                    </li>
                 </ul>
             </div> <!-- end top-nav -->
             <div class="hero container">
@@ -65,46 +71,18 @@
                 </div> --}}
 
                 <div class="products text-center">
-                    <div class="product">
-                        <a href="#"><img src="/img/macbook-pro.png" alt="product"></a>
-                        <a href="#"><div class="product-name">MacBook Pro</div></a>
-                        <div class="product-price">$2499.99</div>
-                    </div>
-                    <div class="product">
-                        <a href="#"><img src="/img/macbook-pro.png" alt="product"></a>
-                        <a href="#"><div class="product-name">MacBook Pro</div></a>
-                        <div class="product-price">$2499.99</div>
-                    </div>
-                    <div class="product">
-                        <a href="#"><img src="/img/macbook-pro.png" alt="product"></a>
-                        <a href="#"><div class="product-name">MacBook Pro</div></a>
-                        <div class="product-price">$2499.99</div>
-                    </div>
-                    <div class="product">
-                        <a href="#"><img src="/img/macbook-pro.png" alt="product"></a>
-                        <a href="#"><div class="product-name">MacBook Pro</div></a>
-                        <div class="product-price">$2499.99</div>
-                    </div>
-                    <div class="product">
-                        <a href="#"><img src="/img/macbook-pro.png" alt="product"></a>
-                        <a href="#"><div class="product-name">MacBook Pro</div></a>
-                        <div class="product-price">$2499.99</div>
-                    </div>
-                    <div class="product">
-                        <a href="#"><img src="/img/macbook-pro.png" alt="product"></a>
-                        <a href="#"><div class="product-name">MacBook Pro</div></a>
-                        <div class="product-price">$2499.99</div>
-                    </div>
-                    <div class="product">
-                        <a href="#"><img src="/img/macbook-pro.png" alt="product"></a>
-                        <a href="#"><div class="product-name">MacBook Pro</div></a>
-                        <div class="product-price">$2499.99</div>
-                    </div>
-                    <div class="product">
-                        <a href="#"><img src="/img/macbook-pro.png" alt="product"></a>
-                        <a href="#"><div class="product-name">MacBook Pro</div></a>
-                        <div class="product-price">$2499.99</div>
-                    </div>
+
+                    @foreach($products as $product)
+
+                        <div class="product">
+                            <a href="{{route('shop.show',$product->slug)}}"><img src="{{asset('img/products/'.$product->slug.'.jpg')}}" alt="product"></a>
+                            <a href="{{route('shop.show',$product->slug)}}"><div class="product-name">{{$product->name}}</div></a>
+                            <div class="product-price">{{$product->presentPrice()}}</div>
+                        </div>
+
+                        @endforeach
+
+
                 </div> <!-- end products -->
 
                 <div class="text-center button-container">

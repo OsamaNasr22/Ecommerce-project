@@ -10,7 +10,7 @@
 
     <div class="breadcrumbs">
         <div class="container">
-            <a href="#">Home</a>
+            <a href="{{route('landing-page')}}">Home</a>
             <i class="fa fa-chevron-right breadcrumb-separator"></i>
             <span>Shop</span>
             <i class="fa fa-chevron-right breadcrumb-separator"></i>
@@ -26,16 +26,18 @@
             <h1 class="product-section-title">{{$product->name}}</h1>
             <div class="product-section-subtitle">{{$product->details}}</div>
             <div class="product-section-price">{{$product->presentPrice()}}</div>
-
             <p>
                 {{$product->description}}
             </p>
-
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas magni accusantium, sapiente dicta iusto ut dignissimos atque placeat tempora iste.</p>
 
             <p>&nbsp;</p>
 
-            <a href="#" class="button">Add to Cart</a>
+            <!--<a href="#" class="button">Add to Cart</a>-->
+            <form action="{{route('cart.store',$product->id)}}" method="post">
+                {{csrf_field()}}
+               <button type="submit" class="button button-plain">Add to Cart</button>
+            </form>
         </div>
     </div> <!-- end product-section -->
 
