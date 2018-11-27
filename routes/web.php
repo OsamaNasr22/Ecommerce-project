@@ -18,5 +18,8 @@ Route::delete('saveforlater/{id}','SaveForLaterController@destroy')->name('save.
 Route::post('saveforlater/switchToCart/{id}','SaveForLaterController@switchToCart')->name('save.toCart');
 
 Route::post('cart/{product}','CartController@store')->name('cart.store');
-Route::view('/checkout', 'checkout');
-Route::view('/thankyou', 'thankyou');
+Route::get('/checkout','CheckoutController@index')->name('checkout.index');
+Route::post('/checkout','CheckoutController@store')->name('checkout.store');
+//Route::view('/checkout', 'checkout');
+//Route::view('/thankyou', 'thankyou');
+Route::get('/thankyou','ConfirmationController@index')->name('confirmation.index');

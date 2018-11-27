@@ -6,8 +6,9 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "cartalyst/stripe-laravel": "^7.0",
         "fideloper/proxy": "~3.3",
-        "gloudemans/shoppingcart": "^2.5",
+        "gloudemans/shoppingcart": "^2.4",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0"
     },
@@ -16,6 +17,7 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~6.0"
+
     },
 
     "autoload": {
