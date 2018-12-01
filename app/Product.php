@@ -13,4 +13,8 @@ class Product extends Model
     public function scopeSuggestions($query){
         return $query->inRandomOrder()->take(4);
     }
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class,'category_product');
+    }
 }

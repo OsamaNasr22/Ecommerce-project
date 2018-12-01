@@ -2,7 +2,7 @@
 
 //Route::view('/', 'landing-page');
 Route::get('/','LandingPageController@index')->name('landing-page');
-Route::get('/products','ShopController@index')->name('shop.index');
+Route::get('/products/{categoryname?}/{sort?}','ShopController@index')->name('shop.index');
 Route::get('/product/{slug}','ShopController@show')->name('shop.show');
 
 //Route::view('/cart', 'cart');
