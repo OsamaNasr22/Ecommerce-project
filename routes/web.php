@@ -21,6 +21,8 @@ Route::post('cart/{product}','CartController@store')->name('cart.store');
 Route::patch('cart/{product}','CartController@update')->name('cart.update');
 Route::get('/checkout','CheckoutController@index')->name('checkout.index');
 Route::post('/checkout','CheckoutController@store')->name('checkout.store');
+Route::post('/coupon','CouponController@store')->name('coupon.store');
+Route::delete('/coupon','CouponController@destroy')->name('coupon.destroy');
 //Route::view('/checkout', 'checkout');
 //Route::view('/thankyou', 'thankyou');
 Route::get('/thankyou','ConfirmationController@index')->name('confirmation.index');

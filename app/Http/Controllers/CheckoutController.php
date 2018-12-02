@@ -18,7 +18,13 @@ class CheckoutController extends Controller
     public function index()
     {
         //
-        return view('checkout');
+
+        return view('checkout',[
+            'discount'=>$this->discountVariables()->get('discount'),
+            'newSubtotal'=>$this->discountVariables()->get('new_subtotal'),
+            'newTax'=>$this->discountVariables()->get('new_tax'),
+            'newTotal'=>$this->discountVariables()->get('new_total'),
+        ]);
     }
 
     /**
@@ -46,14 +52,15 @@ class CheckoutController extends Controller
 
        try{
             $charge= Stripe::charges()->create([
-                'amount'=> Cart::total() / 100,
+                'amount'=> $this->discountVariables()->get('new_total') / 100,
                 'currency'=>'EGP',
                 'source'=>$request['stripeToken'],
                 'description'=>'Order',
                 'receipt_email'=>$request['email'],
                 'metadata'=>[
                     'contents'=>$contents,
-                    'quantity'=>Cart::instance('default')->count()
+                    'quantity'=>Cart::instance('default')->count(),
+                    'discount'=>collect($this->discountVariables()->get('discount'))
                 ]
             ]);
             Cart::instance('default')->destroy();
@@ -107,5 +114,20 @@ class CheckoutController extends Controller
     public function destroy($id)
     {
         //
+    }
+    private function discountVariables(){
+        $tax= config('cart.tax') / 100;
+
+
+        $discount= session()->get('coupon')['discount']?? 0;
+        $newSubtotal=Cart::subtotal()- $discount ;
+        $newTax= $newSubtotal * $tax;
+        $newTotal= $newSubtotal + $newTax;
+        return collect([
+            'discount'=>$discount,
+            'new_subtotal'=>$newSubtotal,
+            'new_tax'=>$newTax,
+            'new_total'=>$newTotal
+        ]);
     }
 }
