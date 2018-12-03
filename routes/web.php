@@ -26,3 +26,8 @@ Route::delete('/coupon','CouponController@destroy')->name('coupon.destroy');
 //Route::view('/checkout', 'checkout');
 //Route::view('/thankyou', 'thankyou');
 Route::get('/thankyou','ConfirmationController@index')->name('confirmation.index');
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
