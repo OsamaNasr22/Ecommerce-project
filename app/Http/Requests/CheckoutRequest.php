@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutRequest extends FormRequest
 {
@@ -23,8 +24,9 @@ class CheckoutRequest extends FormRequest
      */
     public function rules()
     {
+        $valid= (Auth::check())?'required|email':'required|email|unique:users';
         return [
-            'email'=>'required|email',
+            'email'=>$valid,
             'name'=>'required',
             'address'=>'required',
             'city'=>'required',

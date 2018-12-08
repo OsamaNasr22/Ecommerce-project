@@ -7,6 +7,7 @@ use Cartalyst\Stripe\Exception\CardErrorException;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
@@ -19,6 +20,12 @@ class CheckoutController extends Controller
     {
         //
 
+
+        if(\request()->is('guestcheckout')){
+            if(Auth::check()){
+                return redirect()->route('checkout.index');
+            }
+        }
         return view('checkout',[
             'discount'=>$this->discountVariables()->get('discount'),
             'newSubtotal'=>$this->discountVariables()->get('new_subtotal'),

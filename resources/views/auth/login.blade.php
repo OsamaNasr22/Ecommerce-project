@@ -58,6 +58,7 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>
+                                <a href="{{route('checkoutguest.index')}}">checkout as a guest</a>
                             </div>
                         </div>
                     </form>
