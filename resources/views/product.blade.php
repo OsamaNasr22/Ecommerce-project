@@ -19,8 +19,24 @@
     </div> <!-- end breadcrumbs -->
 
     <div class="product-section container">
-        <div class="product-section-image">
-            <img src="{{ imagePath($product->image) }}" alt="product">
+        <div>
+
+            <div class="product-section-image">
+                <img src="{{ imagePath($product->image) }}" alt="product" class="active" id="currentImage">
+            </div>
+
+            <div class="product-section-images">
+                <div class="product-section-thumbnail selected">
+                    <img src="{{ imagePath($product->image) }}" alt="product">
+                </div>
+                @if ($product->images)
+                    @foreach (json_decode($product->images, true) as $image)
+                        <div class="product-section-thumbnail">
+                            <img src="{{ imagePath($image) }}" alt="product">
+                        </div>
+                    @endforeach
+                @endif
+        </div>
         </div>
         <div class="product-section-information">
             <h1 class="product-section-title">{{$product->name}}</h1>
@@ -45,3 +61,31 @@
 
 
 @endsection
+
+@section('extra-js')
+
+    <script>
+        (function () {
+            const currentImage= document.querySelector('#currentImage');
+            const images = document.querySelectorAll('.product-section-thumbnail');
+
+            images.forEach((image) =>image.addEventListener('click',changeCurrent));
+            function changeCurrent(e) {
+               let image= this.querySelector('img');
+                currentImage.classList.remove('active');
+                currentImage.addEventListener('transitionend',function () {
+                    currentImage.src = image.src;
+                    currentImage.classList.add('active');
+                });
+                images.forEach((image) => image.classList.remove('selected'));
+                this.classList.add('selected');
+            }
+
+
+
+        })();
+
+
+    </script>
+
+    @endsection
