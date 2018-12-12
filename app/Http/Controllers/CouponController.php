@@ -8,28 +8,9 @@ use Illuminate\Http\Request;
 
 class CouponController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     *Store coupon details in the session
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -46,6 +27,12 @@ class CouponController extends Controller
         return redirect()->route('checkout.index')->with('success','Coupon has been applied');
     }
 
+
+    /**
+     * Remove the coupon details form the session.
+     * @param Coupon $coupon
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Coupon $coupon)
     {
         //
