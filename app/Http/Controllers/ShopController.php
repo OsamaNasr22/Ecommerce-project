@@ -80,11 +80,15 @@ class ShopController extends Controller
        $this->validate($request,[
            'query'=>'required|min:3'
        ]);
+
        $query= $request['query'];
-       $products= Product::where('name','like',"%{$query}%")
+//search with nicolaslopezj/searchable package
+       $products= Product::search($query)->paginate(10);
+//normal search
+     /*  $products= Product::where('name','like',"%{$query}%")
            ->orWhere('details','like',"%$query%")
            ->orWhere('description','like',"%$query%")
-           ->paginate(10);
+           ->paginate(10);*/
        return view('search_results')->with(compact('products'));
     }
 
