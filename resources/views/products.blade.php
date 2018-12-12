@@ -8,13 +8,29 @@
 
 @section('content')
 
-    <div class="breadcrumbs">
-        <div class="container">
-            <a href="{{route('landing-page')}}">Home</a>
-            <i class="fa fa-chevron-right breadcrumb-separator"></i>
-            <span>Shop</span>
-        </div>
-    </div> <!-- end breadcrumbs -->
+    @component('components.breadcrumbs')
+        <a href="/">Home</a>
+        <i class="fa fa-chevron-right breadcrumb-separator"></i>
+        <span>Shop</span>
+    @endcomponent
+    <div class="container">
+        @if(count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+
+        @endif
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                <p>{{session('success')}}</p>
+            </div>
+        @endif
+    </div>
 
     <div class="products-section container">
         <div class="sidebar">

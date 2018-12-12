@@ -4,7 +4,7 @@
 Route::get('/','LandingPageController@index')->name('landing-page');
 Route::get('/products/{categoryname?}/{sort?}','ShopController@index')->name('shop.index');
 Route::get('/product/{slug}','ShopController@show')->name('shop.show');
-
+Route::get('search','ShopController@search')->name('search');
 //Route::view('/cart', 'cart');
 Route::get('empty',function (){
 

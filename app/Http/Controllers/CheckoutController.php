@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckoutRequest;
+use App\Mail\OrderPlaced;
 use App\Order;
 use App\OrderProduct;
 use Cartalyst\Stripe\Exception\CardErrorException;
@@ -10,6 +11,7 @@ use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -21,6 +23,10 @@ class CheckoutController extends Controller
     public function index()
     {
         //
+
+        if(Cart::instance('default')->count() <= 0){
+            return redirect()->route('shop.index')->withErrors('Invalid, Cart is empty');
+        }
         if(\request()->is('guestcheckout')){
             if(Auth::check()){
                 return redirect()->route('checkout.index');
@@ -64,11 +70,13 @@ class CheckoutController extends Controller
                 ]
             ]);
             //save the order in database
-            $this->saveOrderInDb($request,null);
+           $order= $this->saveOrderInDb($request,null);
             //delete the cart content
             Cart::instance('default')->destroy();
             //delete coupon code from the session
             session()->forget('coupon');
+            //Mail user with order information
+            Mail::send(new OrderPlaced($order));
             return redirect()->route('confirmation.index')->with('success','Thank you for check out , Your order payment done successfully');
        }catch (CardErrorException $exception){
            $this->saveOrderInDb($request, $exception->getMessage());
