@@ -15,9 +15,6 @@ class ShopController extends Controller
      */
     public function index($category=null,$sort=null)
     {
-        //
-
-
         $categories= Category::all();
         $pagination= 9;
         if (isset($category) ){
@@ -80,7 +77,6 @@ class ShopController extends Controller
        $this->validate($request,[
            'query'=>'required|min:3'
        ]);
-
        $query= $request['query'];
 //search with nicolaslopezj/searchable package
        $products= Product::search($query)->paginate(10);
